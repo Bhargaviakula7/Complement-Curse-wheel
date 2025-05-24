@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Compliment or Roast Wheel</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Pacifico&family=Quicksand:wght@400;700&display=swap');
+
+    body {
+      margin: 0;
+      background: linear-gradient(270deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee);
+      background-size: 800% 800%;
+      animation: gradientFlow 15s ease infinite;
+      font-family: 'Quicksand', sans-serif;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+
+    @keyframes gradientFlow {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    h1 {
+      font-family: 'Luckiest Guy', cursive;
+      font-size: 3.2rem;
+      background: linear-gradient(to right, #55039c, #e4048a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.6);
+      margin-bottom: 5px;
+    }
+
+    p.subtitle {
+      font-family: 'Pacifico', cursive;
+      font-size: 1.3rem;
+      color: #6a1b9a;
+      margin-bottom: 35px;
+      text-shadow: 1px 1px 2px #fff;
+    }
+
+    button {
+      background: linear-gradient(135deg, #d500f9, #8e24aa);
+      border: none;
+      color: white;
+      font-size: 1.4rem;
+      font-family: 'Luckiest Guy', cursive;
+      padding: 15px 45px;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgba(106, 27, 154, 0.6);
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #8e24aa, #6a1b9a);
+      transform: scale(1.05);
+    }
+
+    #result {
+      margin-top: 40px;
+      font-size: 1.7rem;
+      font-weight: bold;
+      color: #4527a0;
+      min-height: 80px;
+      text-align: center;
+      max-width: 700px;
+      padding: 25px;
+      border-radius: 25px;
+      background: rgba(255, 255, 255, 0.75);
+      box-shadow: 0 4px 20px rgba(75, 0, 130, 0.3);
+      user-select: none;
+      backdrop-filter: blur(5px);
+      transition: all 0.4s ease;
+    }
+
+    #result.animate {
+      animation: pop 0.5s ease forwards;
+    }
+
+    @keyframes pop {
+      0% {transform: scale(0.8);}
+      50% {transform: scale(1.1);}
+      100% {transform: scale(1);}
+    }
+
+    footer {
+      margin-top: auto;
+      color: #4a148c;
+      font-family: 'Pacifico', cursive;
+      font-size: 1rem;
+      opacity: 0.7;
+      padding-top: 25px;
+    }
+
+    a {
+      color: #6a1b9a;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+  </style>
+</head>
+<body>
+
+  <h1>Compliment or Roast Wheel</h1>
+  <p class="subtitle">Click the magic button to find out your fate 👀</p>
+
+  <button id="spinBtn">Spin the Wheel!</button>
+
+  <div id="result"></div>
+
+  <footer>
+    Created with 💜 for fun by <a href="https://openai.com" target="_blank" rel="noopener noreferrer">You</a>
+  </footer>
+
+  <script>
+    const compliments = [
+      "Are you Wi-Fi? Because I'm feeling a strong connection.",
+      "Do you have a map? I just got lost in your code.",
+      "Are you a keyboard? Because you're just my type.",
+      "If looks could debug, you'd solve all my errors.",
+      "Are you a semicolon? Because my life feels incomplete without you.",
+      "You're the CSS to my HTML— you make everything look better.",
+      "If I had a nickel for every time I thought of you, I'd be rich enough to buy Stack Overflow.",
+      "You're like a well-written function— short, sweet, and extremely useful.",
+      "You're the JavaScript to my webpage— without you, I'm static.",
+      "Are you a Git commit? Because I can't push you away.",
+      "You're like my favorite variable— I always want to call you.",
+      "Are you a dark theme? Because you've made my whole world easier to look at.",
+      "You must be a compiler warning, because you caught my attention.",
+      "Are you a breakpoint? Because you stop me in my tracks.",
+      "If being charming was a bug, you’d be impossible to fix."
+    ];
+
+    const roasts = [
+      "You're like a semicolon—easy to forget, but it breaks everything when you're missing.",
+      "You're not a bug, you're a feature no one asked for.",
+      "You're like a sleep() function—everything stops when you're around.",
+      "If awkwardness were an API, you'd be its main endpoint.",
+      "You must be made of copper and tellurium—because you're Cu-Te... but still annoying.",
+      "You're like an outdated library—trying your best, but still breaking things.",
+      "You're the kind of person who claps when the plane lands.",
+      "You have the logic of a while(true) loop—with no break.",
+      "You debug like a ninja—except you break more than you fix.",
+      "You're like a smartphone with 2% battery and no charger in sight.",
+      "You're the human version of ‘it works on my machine.’",
+      "You're like a CSS bug—hard to find and impossible to forget.",
+      "You're a 1 in binary—just trying to stand out in a world full of 0s.",
+      "You're like a Wi-Fi signal—strong one minute, gone the next.",
+      "You're like a soft keyboard—cute, but not very helpful in a crisis.",
+      "You talk like an AI chatbot stuck in a loop.",
+      "You're not laggy—you’re just operating on potato-mode.",
+      "You're like a tutorial video with no timestamps—long and confusing but oddly helpful.",
+      "You're like an email with no subject—confusing, but we open it anyway.",
+      "You're like a QR code in bad lighting—hard to figure out, but eventually worth it."
+    ];
+
+    const resultDiv = document.getElementById('result');
+    const button = document.getElementById('spinBtn');
+
+    button.addEventListener('click', () => {
+      button.disabled = true;
+
+      const isCompliment = Math.random() < 0.5;
+      const messages = isCompliment ? compliments : roasts;
+      const message = messages[Math.floor(Math.random() * messages.length)];
+
+      resultDiv.textContent = message;
+      resultDiv.classList.add('animate');
+
+      alert(isCompliment ? "You're awesome! 😄" : "Ouch! That was a roast! 🔥");
+
+      setTimeout(() => {
+        resultDiv.classList.remove('animate');
+        button.disabled = false;
+      }, 600);
+    });
+  </script>
+
+</body>
+</html>
